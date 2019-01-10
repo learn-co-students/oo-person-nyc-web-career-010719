@@ -19,6 +19,8 @@ class Person
     @hygiene = range(hygiene)
   end
 
+  #test
+
   def clean?
     if @hygiene > 7
       return true
