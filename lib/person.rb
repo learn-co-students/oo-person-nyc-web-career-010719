@@ -1,7 +1,7 @@
 require 'pry'
 # your code goes here
 class Person
-  attr_reader :name
+  attr_reader :name, :hygiene, :happiness
   attr_accessor :bank_account
 
   def initialize(name)
@@ -13,31 +13,15 @@ class Person
   end
 
   def happiness=(happiness)
-    if happiness > 10
-      @happiness = 10
-    elsif happiness < 0
-      @happiness = 0
-    else
-      @happiness = happiness
-    end
-  end
-
-  def happiness
-    @happiness
+    @happiness = happiness
+    @happiness = 10 if @happiness > 10
+    @happiness = 0 if @happiness < 0
   end
 
   def hygiene=(hygiene)
-    if hygiene > 10
-      @hygiene = 10
-    elsif hygiene < 0
-      @hygiene = 0
-    else
-      @hygiene = hygiene
-    end
-  end
-
-  def hygiene
-    @hygiene
+    @hygiene = hygiene
+    @hygiene = 10 if @hygiene > 10
+    @hygiene = 0 if @hygiene < 0
   end
 
   def clean?
@@ -55,42 +39,30 @@ class Person
 
   def take_bath
     self.hygiene += 4
-    self.hygiene
     "♪ Rub-a-dub just relaxing in the tub ♫"
   end
 
   def work_out
     self.happiness += 2
     self.hygiene -= 3
-    self.happiness
-    self.hygiene
     "♪ another one bites the dust ♫"
   end
 
   def call_friend(friend)
-    friend.happiness += 3
-    self.happiness += 3
-    friend.happiness
-    self.happiness
+    [friend,self].each { |person| person.happiness += 3 }
     "Hi #{friend.name}! It's #{self.name}. How are you?"
   end
 
   def start_conversation(friend,topic)
     if topic == 'politics'
-      friend.happiness -= 2
-      self.happiness -= 2
-      friend.happiness
-      self.happiness
-      "blah blah partisan blah lobbyist"
+      [friend,self].each { |person| person.happiness -= 2 }
+      word_pool = ['partisan', 'lobbyist']
     elsif topic == 'weather'
-      friend.happiness += 1
-      self.happiness += 1
-      friend.happiness
-      self.happiness
-      "blah blah sun blah rain"
+      [friend,self].each { |person| person.happiness += 1 }
+      word_pool = ['sun', 'rain']
     else
-      "blah blah blah blah blah"
+      word_pool = ['blah', 'blah']
     end
+    "blah blah #{word_pool[0]} blah #{word_pool[1]}"
   end
-  #binding.pry
 end
